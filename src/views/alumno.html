@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Panel del Alumno - ITT</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        <link rel="stylesheet" href="/css/alumno.css">
+    <!-- Firebase CDN -->
+    <link rel="icon" href="/favicon.ico">
+        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+        <!-- Configuración de tu proyecto Firebase -->
+        <script>
+            var firebaseConfig = {
+                apiKey: "AIzaSyAjoGGduHwTctK12k7dPfHqd0116dQylzE",
+                authDomain: "registro-asistenciaqr.firebaseapp.com",
+                databaseURL: "https://registro-asistenciaqr-default-rtdb.firebaseio.com",
+                projectId: "registro-asistenciaqr",
+                storageBucket: "registro-asistenciaqr.appspot.com",
+                messagingSenderId: "928437205377",
+                appId: "1:928437205377:web:463905979dbd2af9d85080"
+            };
+            firebase.initializeApp(firebaseConfig);
+        </script>
+</head>
+<body>
+    <div class="background-animation"></div>
+    
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="user-welcome">
+                    <div class="avatar">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <div>
+                        <h1>Bienvenido, Estudiante</h1>
+                        <p>Instituto Tecnológico de Tumbes</p>
+                        <span class="student-code">Código: <span id="studentCode">202411001</span></span>
+                    </div>
+                </div>
+                <button onclick="logout()" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Cerrar Sesión
+                </button>
+            </div>
+        </header>
+
+        <!-- Panel Principal -->
+        <div class="main-panel">
+            <!-- Sección de Escáner QR -->
+            <div class="section-card">
+                <div class="section-header">
+                    <i class="fas fa-qrcode"></i>
+                    <h2>Escanear Código QR de Asistencia</h2>
+                </div>
+                <div class="scanner-section">
+                    <div class="scanner-container">
+                        <div id="scannerPlaceholder" class="scanner-placeholder">
+                            <div class="scanner-icon">
+                                <i class="fas fa-camera"></i>
+                            </div>
+                            <p>Presione el botón para activar el escáner</p>
+                            <button onclick="startScanner()" class="scan-btn">
+                                <i class="fas fa-play"></i>
+                                Activar Escáner QR
+                            </button>
+                        </div>
+                        
+                        <div id="scannerActive" class="scanner-active" style="display: none;">
+                            <div class="scanner-view">
+                                <div class="scanner-frame">
+                                    <div class="scan-line"></div>
+                                </div>
+                            </div>
+                            <div class="scanner-controls">
+                                <button onclick="stopScanner()" class="stop-btn">
+                                    <i class="fas fa-stop"></i>
+                                    Detener Escáner
+                                </button>
+                                <button onclick="toggleFlash()" class="flash-btn">
+                                    <i class="fas fa-lightbulb" id="flashIcon"></i>
+                                    <span id="flashText">Encender Flash</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="scan-history">
+                        <h3>Últimos Escaneos</h3>
+                        <div id="scanHistory" class="history-list">
+                            <div class="empty-history">
+                                <i class="fas fa-history"></i>
+                                <p>No hay escaneos recientes</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección de Perfil -->
+            <div class="section-card">
+                <div class="section-header">
+                    <i class="fas fa-user-edit"></i>
+                    <h2>Actualizar Perfil</h2>
+                </div>
+                <div class="profile-section">
+                    <form id="profileForm" class="profile-form">
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label for="nombre">Nombre Completo:</label>
+                                    <input type="text" id="nombre" value="">
+                            </div>
+                            <div class="input-group">
+                                <label for="email">Correo:</label>
+                                    <input type="email" id="email" value="" disabled>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label for="telefono">Teléfono:</label>
+                                    <input type="tel" id="telefono" value="">
+                            </div>
+                            <div class="input-group">
+                                <label for="carrera">Carrera:</label>
+                                    <select id="carrera" class="input-field">
+                                        <option value="">Selecciona tu carrera</option>
+                                    </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="cicloPerfil">Ciclo:</label>
+                                    <select id="cicloPerfil" class="input-field">
+                                        <option value="">Selecciona tu ciclo</option>
+                                    </select>
+                            </div>
+                        </div>
+                        
+                        <div class="input-group full-width">
+                            <label for="direccion">Dirección:</label>
+                                <input type="text" id="direccion" value="">
+                        </div>
+
+                        <button type="submit" class="save-btn">
+                            <i class="fas fa-save"></i>
+                            Guardar Cambios
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Sección de Cambio de Clave -->
+            <div class="section-card">
+                <div class="section-header">
+                    <i class="fas fa-key"></i>
+                    <h2>Cambiar Contraseña</h2>
+                </div>
+                <div class="password-section">
+                    <form id="passwordForm" class="password-form">
+                        <div class="input-group">
+                            <label for="currentPassword">Contraseña Actual:</label>
+                            <div class="password-input">
+                                <input type="password" id="currentPassword" required>
+                                <button type="button" class="toggle-password">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="newPassword">Nueva Contraseña:</label>
+                            <div class="password-input">
+                                <input type="password" id="newPassword" required>
+                                <button type="button" class="toggle-password">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                            <div class="password-strength">
+                                <div class="strength-bar"></div>
+                                <span class="strength-text">Seguridad: Débil</span>
+                            </div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="confirmPassword">Confirmar Nueva Contraseña:</label>
+                            <div class="password-input">
+                                <input type="password" id="confirmPassword" required>
+                                <button type="button" class="toggle-password">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                            <div id="passwordMatch" class="password-match"></div>
+                        </div>
+
+                        <div class="password-requirements">
+                            <h4>La contraseña debe contener:</h4>
+                            <ul>
+                                <li id="reqLength">Mínimo 8 caracteres</li>
+                                <li id="reqUpper">Una letra mayúscula</li>
+                                <li id="reqNumber">Un número</li>
+                                <li id="reqSpecial">Un carácter especial</li>
+                            </ul>
+                        </div>
+
+                        <button type="submit" class="change-btn">
+                            <i class="fas fa-lock"></i>
+                            Cambiar Contraseña
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mensajes de Estado -->
+        <div id="statusMessage" class="status-message">
+            <i class="fas fa-info-circle"></i>
+            <span id="statusText">Bienvenido al panel del estudiante</span>
+        </div>
+    </div>
+
+    <!-- Cargar html5-qrcode antes que alumno.js -->
+    <script src="/js/html5-qrcode.min.js"></script>
+    <script type="module" src="/js/alumno.js"></script>
+</body>
+</html>

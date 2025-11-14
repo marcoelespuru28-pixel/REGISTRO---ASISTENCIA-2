@@ -1,0 +1,172 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 400px;
+}
+
+/* Header institucional */
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+    color: white;
+}
+
+.header h1 {
+    font-size: 1.5em;
+    margin-bottom: 5px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.header h2 {
+    font-size: 1.1em;
+    font-weight: normal;
+    opacity: 0.9;
+}
+
+/* Cuadro de login */
+.login-box {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    overflow: hidden;
+}
+
+.login-header {
+    background: #007bff;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.login-header h3 {
+    font-size: 1.2em;
+}
+
+.login-form {
+    padding: 30px;
+}
+
+/* Grupos de input */
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #333;
+    font-weight: bold;
+    font-size: 0.9em;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+    transition: border-color 0.3s ease;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+/* Tipo de usuario */
+.user-type {
+    margin-bottom: 25px;
+}
+
+.user-type label {
+    display: block;
+    margin-bottom: 10px;
+    color: #333;
+    font-weight: bold;
+    font-size: 0.9em;
+}
+
+.radio-group {
+    display: flex;
+    gap: 15px;
+}
+
+.radio-label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+.radio-label input[type="radio"] {
+    margin: 0;
+}
+
+/* Botón de login */
+.login-btn {
+    width: 100%;
+    padding: 12px;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.login-btn:hover {
+    background: #218838;
+}
+
+/* Mensaje de error */
+.error-message {
+    background: #f8d7da;
+    color: #721c24;
+    padding: 12px;
+    border-radius: 5px;
+    margin-top: 15px;
+    text-align: center;
+    border: 1px solid #f5c6cb;
+}
+
+/* Información simple */
+.info-simple {
+    text-align: center;
+    margin-top: 20px;
+    color: white;
+    font-size: 0.9em;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .container {
+        padding: 10px;
+    }
+    
+    .login-form {
+        padding: 20px;
+    }
+    
+    .radio-group {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
