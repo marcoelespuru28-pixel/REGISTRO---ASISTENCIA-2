@@ -102,3 +102,6 @@ build/
 # Certificate files (if not needed in repo)
 *.pem
 *.key
+
+# Firebase config
+src/config/firebase-config.json
